@@ -1,4 +1,10 @@
 class Movie < ActiveRecord::Base
+
+  # place a copy of the following line anywhere inside the Movie class
+  #  AND inside the Moviegoer class (idiomatically, it should go right
+  #  after 'class Movie' or 'class Moviegoer'):
+  has_many :reviews
+  
   def self.all_ratings
     ['G', 'PG', 'PG-13', 'R']
   end

@@ -4,7 +4,11 @@ Rottenpotatoes::Application.routes.draw do
     sessions: 'moviegoers/sessions',
     registrations: 'moviegoers/registrations'
   }
-  resources :movies
+
+  # get 'moviegoers/sign_in' as => 'login'
+  resources :movies do 
+    resources :reviews
+  end
   # map '/' to be a redirect to '/movies'
   root :to => redirect('/movies')
 

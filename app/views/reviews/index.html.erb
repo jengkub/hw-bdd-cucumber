@@ -1,0 +1,32 @@
+<!--  This file is app/views/movies/index.html.erb -->
+<h2>All Rating</h2>
+<%# <h2>Search TMDb for a movie</h2> %>
+
+<table class="table table-striped col-md-12" id="movies">
+  <thead>
+    <tr>
+      <th>Comment</th>
+      <th>Potatoes</th>
+      <th>Reviewer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_reviews.each do |review| %>
+      <tr>
+        <td>
+          <%= review.comments %>
+        </td>
+        <td>
+          <%= review.potatoes %>
+        </td>
+        <td>
+          <%= review.moviegoer.full_name %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="row">
+  <%= link_to 'Create', new_movie_review_path(@movie), class: 'btn btn-primary col-2' %>
+</div>
+
