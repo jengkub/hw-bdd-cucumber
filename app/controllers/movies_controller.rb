@@ -1,3 +1,5 @@
+Tmdb::Api.key(ENV["TMDB_API"])
+
 class MoviesController < ApplicationController
   before_action :force_index_redirect, only: [:index]
 
@@ -18,6 +20,9 @@ class MoviesController < ApplicationController
   end
 
   def new
+    @movie_title = params[:name]
+    @movie_rating = params[:rate]
+    @movie_date = params[:date]
     # default: render 'new' template
   end
 
@@ -46,10 +51,20 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
-    if params[:movie][:title] == "Inception"
-      @title = "Inception"
-      rating = 'PG'
-      desc = 'Helloooo'
+    title = params[:movie][:title]
+    movie = Tmdb::Movie.find(title)
+
+    if !(movie.empty?)
+      @title = movie[0].title
+      @date = movie[0].release_date
+
+      if Movie.where(title: @title).empty?
+        redirect_to new_movie_path(name:@title,date:@date)
+      else
+        movie = Movie.where(title: @title)
+        redirect_to movie_path(movie[0].id)
+      # redirect_to new_movie_path(name:@title,date:@date)
+      end
     else
       redirect_to movies_path
       title = (params[:movie][:title])
